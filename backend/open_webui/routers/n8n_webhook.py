@@ -92,7 +92,7 @@ async def stream_n8n_response(
                 webhook_url,
                 headers=headers,
                 json=request_data,
-                ssl=False
+                ssl=True
             ) as response:
                 if response.status != 200:
                     error_text = await response.text()
