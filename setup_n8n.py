@@ -44,7 +44,7 @@ def test_webhook(url, auth_token=None):
                 data = response.json()
                 print(f"Response: {json.dumps(data, indent=2)}")
                 return True
-            except:
+            except requests.exceptions.JSONDecodeError:
                 print(f"Response (text): {response.text}")
                 return True
         else:
