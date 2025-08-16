@@ -87,6 +87,8 @@ from open_webui.routers import (
     utils,
     scim,
 )
+# Import n8n webhook router
+from open_webui.routers import n8n_webhook
 
 from open_webui.routers.retrieval import (
     get_embedding_function,
@@ -1198,8 +1200,13 @@ app.add_middleware(
 app.mount("/ws", socket_app)
 
 
-app.include_router(ollama.router, prefix="/ollama", tags=["ollama"])
-app.include_router(openai.router, prefix="/openai", tags=["openai"])
+# Disable default model providers - only use n8n webhook
+# app.include_router(ollama.router, prefix="/ollama", tags=["ollama"])
+# app.include_router(openai.router, prefix="/openai", tags=["openai"])
+
+# Add n8n webhook router as the primary model provider
+app.include_router(n8n_webhook.router, prefix="/n8n", tags=["n8n"])
+app.include_router(n8n_webhook.router, prefix="/openai", tags=["n8n"])  # Also mount on /openai for compatibility
 
 
 app.include_router(pipelines.router, prefix="/api/v1/pipelines", tags=["pipelines"])
