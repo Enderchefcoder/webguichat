@@ -56,12 +56,18 @@
 					document.documentElement.classList.add('light');
 					metaThemeColorTag.setAttribute('content', '#ffffff');
 				} else if (localStorage.theme === 'her') {
-					document.documentElement.classList.add('her');
-					metaThemeColorTag.setAttribute('content', '#983724');
-				} else {
-					document.documentElement.classList.add('dark');
-					metaThemeColorTag.setAttribute('content', '#171717');
-				}
+												document.documentElement.classList.add('her');
+							metaThemeColorTag.setAttribute('content', '#983724');
+						} else {
+							// default to system preference for first-time users
+							if (prefersDarkTheme) {
+								document.documentElement.classList.add('dark');
+								metaThemeColorTag.setAttribute('content', '#171717');
+							} else {
+								document.documentElement.classList.add('light');
+								metaThemeColorTag.setAttribute('content', '#ffffff');
+							}
+						}
 
 				window.matchMedia('(prefers-color-scheme: dark)').addListener((e) => {
 					if (localStorage.theme === 'system') {
@@ -101,7 +107,7 @@
 
 		<div
 			id="splash-screen"
-			style="position: fixed; z-index: 100; top: 0; left: 0; width: 100%; height: 100%"
+			style="position: fixed; z-index: 100; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none"
 		>
 			<style type="text/css" nonce="">
 				html {
@@ -131,16 +137,16 @@
 				/>
 
 				<div style="position: relative; width: 24rem; margin-top: 0.5rem">
-					<div
-						id="progress-background"
-						style="
-							position: absolute;
-							width: 100%;
-							height: 0.75rem;
-
-							border-radius: 9999px;
-							background-color: #fafafa9a;
-						"
+									<div
+					id="progress-background"
+					style="
+						position: absolute;
+						width: 100%;
+						height: 0.75rem;
+						border: 1px solid rgba(255,255,255,0.15);
+						border-radius: 9999px;
+						background-color: #fafafa9a;
+					"
 					></div>
 
 					<div
@@ -165,9 +171,6 @@
 </html>
 
 <style type="text/css" nonce="">
-	html {
-		overflow-y: hidden !important;
-	}
 
 	#splash-screen {
 		background: #fff;
