@@ -16,7 +16,7 @@ def validate_webhook_url(url):
     try:
         result = urlparse(url)
         return all([result.scheme, result.netloc])
-    except:
+    except ValueError:
         return False
 
 def test_webhook(url, auth_token=None):
