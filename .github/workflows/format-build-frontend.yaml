@@ -32,7 +32,7 @@ jobs:
           node-version: '22'
 
       - name: Install Dependencies
-        run: npm install --force
+        run: npm ci --force
 
       - name: Format Frontend
         run: npm run format
